@@ -48,6 +48,10 @@ function textObject(value) {
   return value;
 }
 
+function jsonb(value) {
+  return JSON.stringify(value ?? null);
+}
+
 function caseRow(row) {
   return {
     id: Number(row.id),
@@ -341,8 +345,8 @@ app.post('/api/admin/categories', requireAdmin, async (req, res, next) => {
       `,
       [
         item.value,
-        textObject(item.title),
-        textObject(item.description),
+        jsonb(textObject(item.title)),
+        jsonb(textObject(item.description)),
         item.cover || '',
         item.anchor || '',
         item.templateAnchor || item.template_anchor || '',
@@ -374,8 +378,8 @@ app.put('/api/admin/categories/:value', requireAdmin, async (req, res, next) => 
       [
         req.params.value,
         item.value || req.params.value,
-        textObject(item.title),
-        textObject(item.description),
+        jsonb(textObject(item.title)),
+        jsonb(textObject(item.description)),
         item.cover || '',
         item.anchor || '',
         item.templateAnchor || item.template_anchor || '',
@@ -431,17 +435,17 @@ app.post('/api/admin/templates', requireAdmin, async (req, res, next) => {
       `,
       [
         item.id,
-        textObject(item.title),
-        textObject(item.description),
+        jsonb(textObject(item.title)),
+        jsonb(textObject(item.description)),
         item.category || '',
         item.anchor || '',
         item.cover || '',
         asArray(item.styles),
         asArray(item.scenes),
         asArray(item.tags),
-        textObject(item.useWhen || item.use_when),
-        item.guidance || {},
-        item.pitfalls || {},
+        jsonb(textObject(item.useWhen || item.use_when)),
+        jsonb(item.guidance || {}),
+        jsonb(item.pitfalls || {}),
         asArray(item.exampleCases || item.example_cases).map(Number).filter(Number.isFinite),
         item.prompt || '',
         Number(item.sortOrder || item.sort_order || 0)
@@ -480,17 +484,17 @@ app.put('/api/admin/templates/:id', requireAdmin, async (req, res, next) => {
       [
         req.params.id,
         item.id || req.params.id,
-        textObject(item.title),
-        textObject(item.description),
+        jsonb(textObject(item.title)),
+        jsonb(textObject(item.description)),
         item.category || '',
         item.anchor || '',
         item.cover || '',
         asArray(item.styles),
         asArray(item.scenes),
         asArray(item.tags),
-        textObject(item.useWhen || item.use_when),
-        item.guidance || {},
-        item.pitfalls || {},
+        jsonb(textObject(item.useWhen || item.use_when)),
+        jsonb(item.guidance || {}),
+        jsonb(item.pitfalls || {}),
         asArray(item.exampleCases || item.example_cases).map(Number).filter(Number.isFinite),
         item.prompt || '',
         Number(item.sortOrder || item.sort_order || 0)
@@ -680,4 +684,3 @@ function shutdown() {
 
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
-

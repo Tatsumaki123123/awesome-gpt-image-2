@@ -16,6 +16,10 @@ function array(value) {
   return Array.isArray(value) ? value : [];
 }
 
+function jsonb(value) {
+  return JSON.stringify(value ?? null);
+}
+
 const casesPayload = await readJson('data/cases.json');
 const library = await readJson('data/style-library.json');
 
@@ -36,8 +40,8 @@ for (const [index, category] of array(library.categories).entries()) {
     `,
     [
       category.value,
-      textObject(category.title),
-      textObject(category.description),
+      jsonb(textObject(category.title)),
+      jsonb(textObject(category.description)),
       category.cover || '',
       category.anchor || '',
       category.templateAnchor || category.template_anchor || '',
@@ -57,7 +61,7 @@ for (const [index, style] of array(library.styles).entries()) {
         keywords = excluded.keywords,
         sort_order = excluded.sort_order
     `,
-    [style.value, textObject(style.title), array(style.keywords), index]
+    [style.value, jsonb(textObject(style.title)), jsonb(array(style.keywords)), index]
   );
 }
 
@@ -72,7 +76,7 @@ for (const [index, scene] of array(library.scenes).entries()) {
         keywords = excluded.keywords,
         sort_order = excluded.sort_order
     `,
-    [scene.value, textObject(scene.title), array(scene.keywords), index]
+    [scene.value, jsonb(textObject(scene.title)), jsonb(array(scene.keywords)), index]
   );
 }
 
@@ -102,17 +106,17 @@ for (const [index, template] of array(library.templates).entries()) {
     `,
     [
       template.id,
-      textObject(template.title),
-      textObject(template.description),
+      jsonb(textObject(template.title)),
+      jsonb(textObject(template.description)),
       template.category || '',
       template.anchor || '',
       template.cover || '',
       array(template.styles),
       array(template.scenes),
       array(template.tags),
-      textObject(template.useWhen || template.use_when),
-      template.guidance || {},
-      template.pitfalls || {},
+      jsonb(textObject(template.useWhen || template.use_when)),
+      jsonb(template.guidance || {}),
+      jsonb(template.pitfalls || {}),
       array(template.exampleCases || template.example_cases).map(Number).filter(Number.isFinite),
       template.prompt || '',
       index
