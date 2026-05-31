@@ -21,9 +21,9 @@ docker compose up --build
 
 URLs:
 
-- Website: `http://localhost:8080`
-- Admin: `http://localhost:8080/admin.html`
-- API health: `http://localhost:8080/api/health`
+- Website: `http://localhost:5003`
+- Admin: `http://localhost:5003/admin.html`
+- API health: `http://localhost:5003/api/health`
 
 On startup, the API container runs:
 

@@ -29,8 +29,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - "5003:5003"
+    expose:
+      - "5003"
 
   web:
     build:
@@ -39,7 +39,7 @@ services:
     depends_on:
       - api
     ports:
-      - "8080:80"
+      - "5003:80"
 
 volumes:
   postgres_data:
