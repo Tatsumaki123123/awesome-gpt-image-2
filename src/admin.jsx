@@ -188,6 +188,29 @@ function SelectInput({ value, onChange, options }) {
   );
 }
 
+function ImagePreview({ src, alt = '', compact = false }) {
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
+
+  const normalizedSrc = String(src || '').trim();
+  if (!normalizedSrc || failed) {
+    return (
+      <div className={compact ? 'imagePreview compact empty' : 'imagePreview empty'}>
+        <span>{normalizedSrc ? '图片无法加载' : '暂无图片'}</span>
+      </div>
+    );
+  }
+
+  return (
+    <a className={compact ? 'imagePreview compact' : 'imagePreview'} href={normalizedSrc} target="_blank" rel="noreferrer">
+      <img src={normalizedSrc} alt={alt || 'case preview'} onError={() => setFailed(true)} />
+    </a>
+  );
+}
+
 function Login({ onLogin }) {
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('');
@@ -340,6 +363,10 @@ function CaseEditor({ value, onChange, onSave, onCancel, categories, styles, sce
       <Field label="图片路径">
         <TextInput value={item.image} onChange={(image) => onChange({ ...item, image })} placeholder="/images/case001.jpg" />
       </Field>
+      <div className="previewField">
+        <span>图片预览</span>
+        <ImagePreview src={item.image} alt={item.imageAlt || item.title} />
+      </div>
       <Field label="图片说明">
         <TextInput value={item.imageAlt} onChange={(imageAlt) => onChange({ ...item, imageAlt })} />
       </Field>
@@ -649,8 +676,9 @@ function CasesPanel({ categories, styles, scenes }) {
       {message ? <div className={message.includes('失败') || message.includes('ERROR') || message.includes('NOT') ? 'notice error' : 'notice'}>{message}</div> : null}
       {editing ? <CaseEditor value={editing} onChange={setEditing} onSave={save} onCancel={() => setEditing(null)} categories={categories} styles={styles} scenes={scenes} busy={busy} /> : null}
       <DataTable
-        columns={['ID', '标题', '分类', '状态', '统计', '标签', '操作']}
+        columns={['图片', 'ID', '标题', '分类', '状态', '统计', '标签', '操作']}
         rows={items.map((item) => [
+          <ImagePreview src={item.image} alt={item.imageAlt || item.title} compact />,
           `#${item.id}`,
           <div className="titleCell"><strong>{item.title}</strong><span>{item.sourceLabel || '无来源'}</span></div>,
           item.category,
