@@ -1,0 +1,226 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  color: #172033;
+  background: #f6f7fb;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.adminShell {
+  min-height: 100vh;
+}
+
+.adminTopbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #dce2ee;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.adminTopbar h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.adminTopbar p {
+  margin: 4px 0 0;
+  color: #63708a;
+  font-size: 13px;
+}
+
+.adminMain {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 20px;
+  padding: 24px;
+}
+
+.adminNav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.adminNav button,
+.primaryButton,
+.secondaryButton,
+.dangerButton {
+  min-height: 38px;
+  border: 1px solid #ccd5e4;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  background: #fff;
+  color: #172033;
+}
+
+.adminNav button.active,
+.primaryButton {
+  border-color: #246bfe;
+  background: #246bfe;
+  color: #fff;
+}
+
+.dangerButton {
+  border-color: #f0b7b7;
+  color: #b32727;
+}
+
+.contentPanel {
+  display: grid;
+  gap: 16px;
+}
+
+.toolbar,
+.editorPanel,
+.loginCard,
+.tablePanel {
+  border: 1px solid #dce2ee;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(26, 38, 64, 0.06);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+}
+
+.toolbar input {
+  width: min(420px, 100%);
+}
+
+.editorPanel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.editorPanel label,
+.loginCard label {
+  display: grid;
+  gap: 6px;
+  color: #4d5c76;
+  font-size: 13px;
+}
+
+.editorPanel .full {
+  grid-column: 1 / -1;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid #cbd5e4;
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: #fff;
+  color: #172033;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 13px;
+}
+
+.tablePanel {
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 11px 12px;
+  border-bottom: 1px solid #edf1f7;
+  text-align: left;
+  vertical-align: top;
+  font-size: 13px;
+}
+
+th {
+  color: #63708a;
+  background: #f9fbff;
+  font-weight: 600;
+}
+
+.rowActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.loginWrap {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.loginCard {
+  width: min(420px, 100%);
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.loginCard h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.notice {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #eef5ff;
+  color: #24599a;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.error {
+  background: #fff0f0;
+  color: #a52626;
+}
+
+@media (max-width: 840px) {
+  .adminMain {
+    grid-template-columns: 1fr;
+  }
+
+  .adminNav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .editorPanel {
+    grid-template-columns: 1fr;
+  }
+}

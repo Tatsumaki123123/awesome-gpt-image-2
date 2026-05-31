@@ -1,0 +1,12 @@
+{
+  "server": {
+    "port": 5003,
+    "publicApiRequireKey": false
+  },
+  "admin": {
+    "username": "admin",
+    "password": "change-me",
+    "sessionSecret": "replace-with-a-long-random-secret"
+  },
+  "repository": "https://github.com/freestylefly/awesome-gpt-image-2"
+}
