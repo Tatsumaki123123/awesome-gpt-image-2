@@ -65,6 +65,14 @@ Environment variables override the file:
 - `PUBLIC_API_REQUIRE_KEY`
 - `DATABASE_URL`
 
+When using Docker Compose, these variables are read from `.env` and passed into
+the API container. After changing `.env`, restart the stack:
+
+```bash
+docker compose down
+docker compose up --build -d
+```
+
 If `PUBLIC_API_REQUIRE_KEY=true`, public API calls must include:
 
 ```http

@@ -23,6 +23,12 @@ services:
       NODE_ENV: production
       DATABASE_URL: postgres://gpt_image:gpt_image@db:5432/gpt_image
       APP_CONFIG_FILE: /app/config/app.config.json
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH:-}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-}
+      PUBLIC_API_REQUIRE_KEY: ${PUBLIC_API_REQUIRE_KEY:-false}
+      REPOSITORY_URL: ${REPOSITORY_URL:-}
     volumes:
       - ./config:/app/config:ro
       - ./data:/app/data:ro
