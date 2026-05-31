@@ -89,9 +89,13 @@ GET /api/v1/templates
 GET /api/v1/templates/:id
 GET /api/v1/cases
 GET /api/v1/cases/:id
-GET /api/v1/search?q=poster&category=Posters%20%26%20Typography&page=1&pageSize=20
+GET /api/v1/cases/:id/stats
+GET /api/v1/search?q=poster&category=Posters%20%26%20Typography&sort=popular&page=1&pageSize=20
 GET /api/v1/site-data
 GET /api/v1/style-library
+POST /api/v1/cases/:id/use
+POST /api/v1/cases/:id/favorite
+DELETE /api/v1/cases/:id/favorite
 ```
 
 Supported case filters:
@@ -101,8 +105,29 @@ Supported case filters:
 - `style`
 - `scene`
 - `featured=true`
+- `sort=latest | oldest | id | usage | favorites | popular`
+- `order=asc | desc`
 - `page`
 - `pageSize`
+
+Usage and favorite counters are included on every case as `usageCount` and
+`favoriteCount`. External projects can report usage after copying or applying a
+case:
+
+```bash
+curl -X POST -H "X-API-Key: agi_xxx" \
+  https://your-domain/api/v1/cases/484/use
+```
+
+Favorite counters can be incremented or decremented:
+
+```bash
+curl -X POST -H "X-API-Key: agi_xxx" \
+  https://your-domain/api/v1/cases/484/favorite
+
+curl -X DELETE -H "X-API-Key: agi_xxx" \
+  https://your-domain/api/v1/cases/484/favorite
+```
 
 ## Admin API
 

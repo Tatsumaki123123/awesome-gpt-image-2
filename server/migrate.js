@@ -63,12 +63,16 @@ const statements = [
       styles text[] not null default array[]::text[],
       scenes text[] not null default array[]::text[],
       featured boolean not null default false,
+      usage_count integer not null default 0 check (usage_count >= 0),
+      favorite_count integer not null default 0 check (favorite_count >= 0),
       github_url text not null default '',
       status text not null default 'published' check (status in ('draft', 'published', 'archived')),
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now()
     )
   `,
+  `alter table cases add column if not exists usage_count integer not null default 0 check (usage_count >= 0)`,
+  `alter table cases add column if not exists favorite_count integer not null default 0 check (favorite_count >= 0)`,
   `
     create table if not exists api_keys (
       id uuid primary key default gen_random_uuid(),
@@ -86,6 +90,8 @@ const statements = [
   `create index if not exists cases_prompt_trgm_idx on cases using gin (prompt gin_trgm_ops)`,
   `create index if not exists cases_category_idx on cases (category)`,
   `create index if not exists cases_status_idx on cases (status)`,
+  `create index if not exists cases_usage_count_idx on cases (usage_count desc, id desc)`,
+  `create index if not exists cases_favorite_count_idx on cases (favorite_count desc, id desc)`,
   `
     create or replace function set_updated_at()
     returns trigger
